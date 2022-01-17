@@ -18,8 +18,8 @@ import Register from "./Register"
 
 
 function App() {
-  const [ isSuccess, setIsSuccess ] = useState(false)
-  const [ isLoggedIn, setIsLoggedIn ] = useState(true)
+  const [ isSignUpSuccessful, setIsSignUpSuccessful ] = useState(false)
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ currentUser, setCurrentUser ] = useState({
     "name": "",
     "about": "",
@@ -142,6 +142,16 @@ function App() {
         })
   }
   
+  // Управление состоянием авторизации
+  
+  const handleSignUpSuccess = (status) => {
+    setIsSignUpSuccessful(status)
+  }
+  
+  const handleLogin = (status) => {
+    setIsLoggedIn(status)
+  }
+  
   // Изначальный фетч с сервера
   
   useEffect(() => {
@@ -153,7 +163,7 @@ function App() {
           console.log(error)
         })
     api.getUserInfo()
-        .then(r => setCurrentUser(r))
+        .then(response => setCurrentUser(response))
   }, [])
   
   return (
@@ -176,10 +186,10 @@ function App() {
                   component={ Main }
               />
               <Route path="/sign-up">
-                <Register/>
+                <Register signUpStatus={ handleSignUpSuccess }/>
               </Route>
               <Route path="/sign-in">
-                <Login/>
+                <Login isLoggedIn={ handleLogin }/>
               </Route>
               <Route>
                 { isLoggedIn
@@ -232,7 +242,7 @@ function App() {
             <InfoTooltip
                 isOpen={ isInfoTooltipOpen }
                 onClose={ closeAllPopups }
-                isSuccess={ isSuccess }
+                isSuccess={ isSignUpSuccessful }
             />
             <Footer/>
           

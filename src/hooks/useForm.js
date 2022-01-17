@@ -19,7 +19,7 @@ const useForm = () => {
       [name]: event.target.validationMessage
     })
     
-    setIsValid(event.target.closest(".modal__form").checkValidity())
+    setIsValid(event.target.closest("form").checkValidity())
   }
   
   const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false ) => {

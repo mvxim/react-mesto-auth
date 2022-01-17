@@ -14,6 +14,8 @@ function Main({
   
   const currentUser = useContext(CurrentUserContext)
   
+  
+  
   return (
       <main className="main page__main">
         <section
