@@ -1,0 +1,11 @@
+.header__link_type_button {
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  color: hsla(0, 0%, 66%, 1);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+}

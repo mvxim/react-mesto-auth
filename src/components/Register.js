@@ -1,8 +1,8 @@
-import React from "react"
 import { Link } from "react-router-dom"
 import AuthForm from "./AuthForm"
 
 const Register = () => {
+  
   return (
       <main className="auth page__main">
         <section className="auth__container">
