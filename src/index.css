@@ -25,6 +25,9 @@
 /* button */
 @import url(./blocks/button/button.css);
 
+/* link */
+@import url(./blocks/link/link.css);
+
 /* like */
 @import url(./blocks/like/like.css);
 @import url(./blocks/like/_active/like_active.css);

@@ -1,13 +1,7 @@
 .auth__link {
-  text-decoration: none;
   margin-top: 15px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  color: hsla(0, 0%, 100%, 1);
   text-align: center;
-}
-
-.auth__link:visited {
-  color: hsla(0, 0%, 100%, 1);
 }

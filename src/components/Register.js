@@ -11,7 +11,7 @@ const Register = () => {
           </h2>
           <AuthForm buttonText="Зарегистрироваться"/>
           <Link
-              className="auth__link button"
+              className="auth__link button link"
               to="/sign-in"
           >
             Уже&nbsp;зарегистрированы? Войти

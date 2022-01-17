@@ -1,0 +1,9 @@
+.link {
+  color: hsla(0, 0%, 100%, 1);
+  text-decoration: none;
+}
+
+
+.link:visited {
+  color: hsla(0, 0%, 100%, 1);
+}
