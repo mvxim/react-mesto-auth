@@ -1,5 +1,6 @@
 .page__main {
   margin-bottom: 66px;
+  flex-grow: 1;
 }
 
 @media screen and (max-width: 767px) {

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, Route, Switch } from "react-router-dom"
 import headerLogo from "../images/logo/logo_color_white.svg"
 
 function Header() {
@@ -15,6 +15,7 @@ function Header() {
               src={ headerLogo }
           />
         </Link>
+ 
       </header>
   )
 }

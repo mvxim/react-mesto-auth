@@ -4,11 +4,8 @@
   width: 24px;
   height: 24px;
   border: 1px solid #fff;
-  background: url("../../../images/profile/prodile__edit-btn.svg") no-repeat center;
-}
-
-.profile__edit-btn:hover {
-  opacity: .6;
+  color: #fff;
+  background: #000 url("../../../images/profile/prodile__edit-btn.svg") no-repeat center;
 }
 
 @media screen and (max-width: 767px) {

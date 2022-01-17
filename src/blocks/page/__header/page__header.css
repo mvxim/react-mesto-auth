@@ -1,5 +1,6 @@
 .page__header {
   margin-bottom: 40px;
+  flex-grow: 0;
 }
 
 @media screen and (max-width: 767px) {

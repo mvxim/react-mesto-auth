@@ -4,6 +4,7 @@ import "../index.css"
 import AppContent from "./AppContent"
 import Footer from "./Footer"
 import Header from "./Header"
+import Login from "./Login"
 import ProtectedRoute from "./ProtectedRoute"
 import Register from "./Register"
 
