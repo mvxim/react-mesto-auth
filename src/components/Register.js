@@ -1,31 +1,15 @@
-import { Link, useHistory } from "react-router-dom"
-import * as auth from "../auth"
+import { Link } from "react-router-dom"
 import useForm from "../hooks/useForm"
 import AuthForm from "./AuthForm"
 
-const Register = ({signUpStatus, isLoading, setIsLoading, handleInfoTooltip}) => {
+const Register = ({ isLoading, onSignup }) => {
   
   const { handleChange, isValid, values, errors, resetForm } = useForm()
   
-  const history = useHistory()
-  
-  const handleRegistration = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    setIsLoading(true)
-    auth.register(values).then(response => {
-      signUpStatus(true)
-      handleInfoTooltip(true)
-      history.push("/sign-in")
-      console.log(response)
-    })
-        .catch((error) => {
-          console.log(error)
-          signUpStatus(false)
-          handleInfoTooltip(true)
-        })
-        .finally(() => setIsLoading(false))
+    onSignup(values)
   }
-  
   return (
       <main className="auth page__main">
         <section className="auth__container">
@@ -34,13 +18,13 @@ const Register = ({signUpStatus, isLoading, setIsLoading, handleInfoTooltip}) =>
           </h2>
           <AuthForm
               onChange={ handleChange }
-              onSubmit={ handleRegistration }
+              onSubmit={ handleSubmit }
               formData={ values }
               buttonText="Зарегистрироваться"
               isFormValid={ isValid }
               errors={ errors }
-              resetForm={resetForm}
-              isLoading={isLoading}
+              resetForm={ resetForm }
+              isLoading={ isLoading }
           />
           <Link
               className="auth__link button link"

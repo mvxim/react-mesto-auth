@@ -1,5 +1,12 @@
 export const BASE_URL = "https://auth.nomoreparties.co"
 
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json()
+  }
+  return Promise.reject(`>>> Ошибка: ${ res.status }`)
+}
+
 export const register = (userData) => {
   return fetch(`${ BASE_URL }/signup`, {
     method: "POST",
@@ -7,12 +14,7 @@ export const register = (userData) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(userData)
-  }).then((response) => {
-    if (response.ok) {
-      return response.json()
-    }
-    return Promise.reject(`>>> Ошибка: ${ response.status }`)
-  })
+  }).then(checkResponse)
 }
 
 export const login = (userData) => {
@@ -22,12 +24,7 @@ export const login = (userData) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(userData)
-  }).then((response) => {
-    if (response.ok) {
-      return response.json()
-    }
-    return Promise.reject(`>>> Ошибка: ${ response.status }`)
-  })
+  }).then(checkResponse)
 }
 
 export const getContent = (token) => {
@@ -39,6 +36,6 @@ export const getContent = (token) => {
       "Authorization": `Bearer ${ token }`,
     }
   })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(data => data)
 }

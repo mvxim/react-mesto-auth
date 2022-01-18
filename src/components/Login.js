@@ -1,28 +1,13 @@
-import React from "react"
-import { useHistory } from "react-router-dom"
-import * as auth from "../auth"
 import useForm from "../hooks/useForm"
 import AuthForm from "./AuthForm"
 
-const Login = ({ isLoggedIn, isLoading, setIsLoading }) => {
+const Login = ({ isLoading, onSignin }) => {
   
   const { handleChange, isValid, values, errors, resetForm } = useForm()
   
-  
-  const history = useHistory()
-  
-  const handleAuth = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    setIsLoading(true)
-    auth.login(values).then(response => {
-      localStorage.setItem("jwt", response.token)
-      isLoggedIn(true)
-      history.push("/")
-    })
-        .catch((error) => {
-          console.log(error)
-        })
-        .finally(() => setIsLoading(false))
+    onSignin(values)
   }
   
   return (
@@ -33,7 +18,7 @@ const Login = ({ isLoggedIn, isLoading, setIsLoading }) => {
           </h2>
           <AuthForm
               onChange={ handleChange }
-              onSubmit={ handleAuth }
+              onSubmit={ handleSubmit }
               formData={ values }
               buttonText="Войти"
               isFormValid={ isValid }

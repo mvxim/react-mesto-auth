@@ -1,12 +1,13 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom"
 import headerLogo from "../images/logo/logo_color_white.svg"
 
-function Header({ userEmail }) {
+function Header({ userEmail, isLoggedIn }) {
   
   const history = useHistory()
   
   const signOut = () => {
     localStorage.removeItem("jwt")
+    isLoggedIn(false)
     history.push("/sign-in")
   }
   

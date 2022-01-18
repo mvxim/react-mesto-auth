@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
 import { Route, Switch, useHistory } from "react-router-dom"
-import * as auth from "../auth"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 import "../index.css"
 import api from "../utils/api"
+import * as auth from "../utils/auth"
 import AddPlacePopup from "./AddPlacePopup"
 import EditAvatarPopup from "./EditAvatarPopup"
 import EditProfilePopup from "./EditProfilePopup"
@@ -59,7 +59,7 @@ function App() {
           setCards([ newFetchedCard, ...cards ])
           closeAllPopups()
         })
-        .catch()
+        .catch(err => console.log(err))
         .finally(() => {
           handlePopupLoader(false)
         })
@@ -125,7 +125,7 @@ function App() {
           setCurrentUser(newFetchedData)
           closeAllPopups()
         })
-        .catch()
+        .catch(err => console.log(err))
         .finally(() => {
           handlePopupLoader(false)
         })
@@ -138,7 +138,7 @@ function App() {
           setCurrentUser(newFetchedAvatar)
           closeAllPopups()
         })
-        .catch()
+        .catch(err => console.log(err))
         .finally(() => {
           handlePopupLoader(false)
         })
@@ -146,13 +146,39 @@ function App() {
   
   // Управление состоянием авторизации
   
-  const handleSignUpSuccess = (status) => {
-    setIsSignUpSuccessful(status)
-  }
-  
   const handleLogin = (status) => {
     setIsLoggedIn(status)
   }
+  
+  const handleRegistration = (values) => {
+    setIsLoading(true)
+    auth.register(values).then(response => {
+      setIsSignUpSuccessful(true)
+      setTooltip(true)
+      history.push("/sign-in")
+      console.log(response)
+    })
+        .catch((error) => {
+          console.log(error)
+          setIsSignUpSuccessful(false)
+          setTooltip(true)
+        })
+        .finally(() => setIsLoading(false))
+  }
+  
+  const handleAuth = (values) => {
+    setIsLoading(true)
+    auth.login(values).then(response => {
+      localStorage.setItem("jwt", response.token)
+      setIsLoggedIn(true)
+      history.push("/")
+    })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => setIsLoading(false))
+  }
+  
   
   const tokenCheck = useCallback(() => {
     if (localStorage.getItem("jwt")) {
@@ -168,13 +194,15 @@ function App() {
           console.log(error)
         })
       }
+    } else {
+      setIsLoggedIn(false)
     }
-  }, [history])
+  }, [ history ])
   
   // Запрос
   useEffect(() => {
     tokenCheck()
-  }, [isLoggedIn])
+  }, [ isLoggedIn, tokenCheck ])
   
   // Изначальный фетч с сервера
   useEffect(() => {
@@ -192,7 +220,10 @@ function App() {
       <CurrentUserContext.Provider value={ currentUser }>
         <div className="page">
           <div className="page__container">
-            <Header userEmail={ userEmail }/>
+            <Header
+                userEmail={ userEmail }
+                isLoggedIn={ handleLogin }
+            />
             <Switch>
               <ProtectedRoute
                   exact
@@ -209,16 +240,15 @@ function App() {
               />
               <Route path="/sign-up">
                 <Register
-                    signUpStatus={ handleSignUpSuccess }
                     isLoading={ isLoading }
-                    setIsLoading={ setIsLoading }
-                    handleInfoTooltip={ setTooltip }
+                    onSignup={ handleRegistration }
                 />
               </Route>
               <Route path="/sign-in">
                 <Login
                     isLoggedIn={ handleLogin }
                     isLoading={ isLoading }
+                    onSignin={ handleAuth }
                     setIsLoading={ setIsLoading }
                 />
               </Route>
