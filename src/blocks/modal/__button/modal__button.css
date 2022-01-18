@@ -1,7 +1,9 @@
 .modal__button {
   display: block;
+  cursor: pointer;
   width: 100%;
   border: none;
+  color: hsla(0, 0%, 100%, 1);
   background-color: hsla(0, 0%, 0%, 1);
   border-radius: 2px;
   transition: .2s background-color ease;

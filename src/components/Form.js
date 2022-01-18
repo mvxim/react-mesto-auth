@@ -12,7 +12,7 @@ const Form = ({
         { name === "confirm" ? null : children }
         <button
             disabled={ name === "confirm" ? false : !isValid || isLoading }
-            className={ `button modal__button ${ isValid && !isLoading ? "" : "modal__button_disabled" }` }
+            className={ `modal__button ${ isValid && !isLoading ? "" : "modal__button_disabled" }` }
             type="submit"
         >
           { isLoading ? "⏳ Сохранение..." : buttonText }

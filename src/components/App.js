@@ -155,15 +155,14 @@ function App() {
   // Изначальный фетч с сервера
   
   useEffect(() => {
-    api.getPlaces()
-        .then((places) => {
+    Promise.all([ api.getPlaces(), api.getUserInfo() ])
+        .then(([ places, userInfo ]) => {
           setCards(places)
+          setCurrentUser(userInfo)
         })
         .catch(error => {
           console.log(error)
         })
-    api.getUserInfo()
-        .then(response => setCurrentUser(response))
   }, [])
   
   return (

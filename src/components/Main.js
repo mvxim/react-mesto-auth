@@ -13,8 +13,7 @@ function Main({
 }) {
   
   const currentUser = useContext(CurrentUserContext)
-  
-  
+  console.log(currentUser)
   
   return (
       <main className="main page__main">
