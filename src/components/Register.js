@@ -14,10 +14,7 @@ const Register = ({signUpStatus, isLoading, setIsLoading, handleInfoTooltip}) =>
     setIsLoading(true)
     auth.register(values).then(response => {
       signUpStatus(true)
-      handleInfoTooltip({
-        isOpen: true,
-        message: response
-      })
+      handleInfoTooltip(true)
       history.push("/sign-in")
       console.log(response)
     })

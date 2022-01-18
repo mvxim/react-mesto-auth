@@ -42,7 +42,7 @@
    `npm run build`
 
 ## Посмотреть проект:
-🔗 [https://mvxim.github.io/mesto-react/](https://mvxim.github.io/mesto-react/)
+🔗 [https://mvxim.github.io/react-mesto-auth/](https://mvxim.github.io/react-mesto-auth/)
 
 ## План развития проекта:
 - [X] Добавить валидацию форм;

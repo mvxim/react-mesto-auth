@@ -29,7 +29,6 @@ function App() {
     "cohort": ""
   })
   const [ userEmail, setUserEmail ] = useState("")
-  
   const [ cards, setCards ] = useState([])
   const [ selectedCard, setSelectedCard ] = useState({ name: "", link: "" })
   const [ cardToRemoveId, setCardToRemoveId ] = useState("")
@@ -39,7 +38,7 @@ function App() {
   const [ isConfirmationPopupOpen, setIsConfirmationPopupOpen ] = useState(
       false)
   const [ isImagePopupOpen, setIsImagePopupOpen ] = useState(false)
-  const [ tooltip, setTooltip ] = useState({ isOpen: false, message: "" })
+  const [ tooltip, setTooltip ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(false)
   const history = useHistory()
   
@@ -172,9 +171,13 @@ function App() {
     }
   }, [history])
   
-  // Изначальный фетч с сервера
+  // Запрос
   useEffect(() => {
     tokenCheck()
+  }, [isLoggedIn])
+  
+  // Изначальный фетч с сервера
+  useEffect(() => {
     Promise.all([ api.getPlaces(), api.getUserInfo() ])
         .then(([ places, userInfo ]) => {
           setCards(places)
@@ -183,7 +186,7 @@ function App() {
         .catch(error => {
           console.log(error)
         })
-  }, [tokenCheck])
+  }, [])
   
   return (
       <CurrentUserContext.Provider value={ currentUser }>
@@ -219,18 +222,6 @@ function App() {
                     setIsLoading={ setIsLoading }
                 />
               </Route>
-              {/*<Route>*/ }
-              {/*  { isLoggedIn*/ }
-              {/*    ? (*/ }
-              {/*        <Redirect*/ }
-              {/*            exact*/ }
-              {/*            to="/"*/ }
-              {/*        />*/ }
-              {/*    )*/ }
-              {/*    : (*/ }
-              {/*        <Redirect to="/sign-in"/>*/ }
-              {/*    ) }*/ }
-              {/*</Route>*/ }
             </Switch>
             <EditAvatarPopup
                 isOpen={ isEditAvatarPopupOpen }
@@ -268,7 +259,7 @@ function App() {
             />
             
             <InfoTooltip
-                isOpen={ tooltip.isOpen }
+                isOpen={ tooltip }
                 onClose={ closeAllPopups }
                 isSuccess={ isSignUpSuccessful }
             />

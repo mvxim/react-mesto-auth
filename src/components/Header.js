@@ -35,7 +35,7 @@ function Header({ userEmail }) {
                 to="/sign-up"
             >Регистрация</Link>
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <div className="header__nav">
               <p className="header__email">
                 { userEmail ? userEmail : "" }
