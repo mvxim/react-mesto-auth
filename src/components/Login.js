@@ -4,7 +4,7 @@ import * as auth from "../auth"
 import useForm from "../hooks/useForm"
 import AuthForm from "./AuthForm"
 
-const Login = ({ isLoggedIn }) => {
+const Login = ({ isLoggedIn, isLoading}) => {
   
   const { handleChange, isValid, values, errors, resetForm } = useForm()
   
@@ -17,7 +17,7 @@ const Login = ({ isLoggedIn }) => {
     auth.login(values).then(response => {
       console.log(response)
       isLoggedIn(true)
-      // history.push("/")
+      history.push("/")
     })
         .catch((error) => {
           console.log(error)
@@ -38,6 +38,7 @@ const Login = ({ isLoggedIn }) => {
               isFormValid={ isValid }
               errors={ errors }
               resetForm={resetForm}
+              isLoading={isLoading}
           />
         </section>
       

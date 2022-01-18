@@ -185,10 +185,16 @@ function App() {
                   component={ Main }
               />
               <Route path="/sign-up">
-                <Register signUpStatus={ handleSignUpSuccess }/>
+                <Register
+                    signUpStatus={ handleSignUpSuccess }
+                    isLoading={ isLoading }
+                />
               </Route>
               <Route path="/sign-in">
-                <Login isLoggedIn={ handleLogin }/>
+                <Login
+                    isLoggedIn={ handleLogin }
+                    isLoading={ isLoading }
+                />
               </Route>
               <Route>
                 { isLoggedIn

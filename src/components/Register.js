@@ -3,7 +3,7 @@ import * as auth from "../auth"
 import useForm from "../hooks/useForm"
 import AuthForm from "./AuthForm"
 
-const Register = ({signUpStatus}) => {
+const Register = ({signUpStatus, isLoading}) => {
   
   const { handleChange, isValid, values, errors, resetForm } = useForm()
   
@@ -15,6 +15,7 @@ const Register = ({signUpStatus}) => {
     auth.register(values).then(response => {
       signUpStatus(true)
       console.log(response)
+      history.push("/sign-in")
     })
         .catch((error) => {
           console.log(error)
@@ -36,6 +37,7 @@ const Register = ({signUpStatus}) => {
               isFormValid={ isValid }
               errors={ errors }
               resetForm={resetForm}
+              isLoading={isLoading}
           />
           <Link
               className="auth__link button link"

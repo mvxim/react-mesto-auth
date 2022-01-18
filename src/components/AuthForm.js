@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
 const AuthForm = ({
-  buttonText, onSubmit, formData, onChange, errors, resetForm
+  buttonText, onSubmit, formData, onChange, errors, resetForm, isFormValid, isLoading
 }) => {
   
   useEffect(() => {
@@ -22,6 +22,7 @@ const AuthForm = ({
               placeholder="Email"
               value={ formData.email || "" }
               onChange={ onChange }
+              required
           />
           <span className="modal__error">
             { errors.email }
@@ -35,16 +36,18 @@ const AuthForm = ({
               maxLength="32"
               value={ formData.password || "" }
               onChange={ onChange }
+              required
           />
           <span className="modal__error">
           { errors.password }
           </span>
         </fieldset>
         <button
-            className="auth__button"
+            disabled={ !isFormValid || isLoading }
+            className={`auth__button ${ isFormValid && !isLoading ? "" : "auth__button_disabled" }`}
             type="submit"
         >
-          { buttonText }
+          { isLoading ? "⏳ Обработка" : buttonText }
         </button>
       
       </form>

@@ -103,7 +103,7 @@
 /* fieldset */
 @import url(./blocks/fieldset/fieldset.css);
 
-/* login */
+/* auth */
 @import url(./blocks/auth/auth.css);
 @import url(./blocks/auth/__container/auth__container.css);
 @import url(./blocks/auth/__title/auth__title.css);
@@ -111,4 +111,5 @@
 @import url(./blocks/auth/__fieldset/auth__fieldset.css);
 @import url(./blocks/auth/__input/auth__input.css);
 @import url(./blocks/auth/__button/auth__button.css);
+@import url(./blocks/auth/__button/_disabled/auth__button_disabled.css);
 @import url(./blocks/auth/__link/auth__link.css);
