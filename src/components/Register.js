@@ -3,7 +3,7 @@ import * as auth from "../auth"
 import useForm from "../hooks/useForm"
 import AuthForm from "./AuthForm"
 
-const Register = ({signUpStatus, isLoading}) => {
+const Register = ({signUpStatus, isLoading, setIsLoading, handleInfoTooltip}) => {
   
   const { handleChange, isValid, values, errors, resetForm } = useForm()
   
@@ -11,16 +11,22 @@ const Register = ({signUpStatus, isLoading}) => {
   
   const handleRegistration = (event) => {
     event.preventDefault()
-    console.log(values)
+    setIsLoading(true)
     auth.register(values).then(response => {
       signUpStatus(true)
-      console.log(response)
+      handleInfoTooltip({
+        isOpen: true,
+        message: response
+      })
       history.push("/sign-in")
+      console.log(response)
     })
         .catch((error) => {
           console.log(error)
           signUpStatus(false)
+          handleInfoTooltip(true)
         })
+        .finally(() => setIsLoading(false))
   }
   
   return (

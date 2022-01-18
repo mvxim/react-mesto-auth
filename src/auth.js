@@ -8,11 +8,10 @@ export const register = (userData) => {
     },
     body: JSON.stringify(userData)
   }).then((response) => {
-    if (response.status === 201) {
+    if (response.ok) {
       return response.json()
     }
     return Promise.reject(`>>> Ошибка: ${ response.status }`)
-    
   })
 }
 
@@ -24,9 +23,22 @@ export const login = (userData) => {
     },
     body: JSON.stringify(userData)
   }).then((response) => {
-    if (response.status === 200) {
+    if (response.ok) {
       return response.json()
     }
     return Promise.reject(`>>> Ошибка: ${ response.status }`)
   })
+}
+
+export const getContent = (token) => {
+  return fetch(`${ BASE_URL }/users/me`, {
+    method: "GET",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${ token }`,
+    }
+  })
+      .then(res => res.json())
+      .then(data => data)
 }

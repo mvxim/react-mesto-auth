@@ -4,7 +4,7 @@ import * as auth from "../auth"
 import useForm from "../hooks/useForm"
 import AuthForm from "./AuthForm"
 
-const Login = ({ isLoggedIn, isLoading}) => {
+const Login = ({ isLoggedIn, isLoading, setIsLoading }) => {
   
   const { handleChange, isValid, values, errors, resetForm } = useForm()
   
@@ -13,15 +13,16 @@ const Login = ({ isLoggedIn, isLoading}) => {
   
   const handleAuth = (event) => {
     event.preventDefault()
-    console.log(values)
+    setIsLoading(true)
     auth.login(values).then(response => {
-      console.log(response)
+      localStorage.setItem("jwt", response.token)
       isLoggedIn(true)
       history.push("/")
     })
         .catch((error) => {
           console.log(error)
         })
+        .finally(() => setIsLoading(false))
   }
   
   return (
@@ -37,8 +38,8 @@ const Login = ({ isLoggedIn, isLoading}) => {
               buttonText="Войти"
               isFormValid={ isValid }
               errors={ errors }
-              resetForm={resetForm}
-              isLoading={isLoading}
+              resetForm={ resetForm }
+              isLoading={ isLoading }
           />
         </section>
       

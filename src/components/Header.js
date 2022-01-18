@@ -1,9 +1,14 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom"
 import headerLogo from "../images/logo/logo_color_white.svg"
 
-function Header({ isLoggedIn }) {
+function Header({ userEmail }) {
   
   const history = useHistory()
+  
+  const signOut = () => {
+    localStorage.removeItem("jwt")
+    history.push("/sign-in")
+  }
   
   return (
       <header className="header page__header">
@@ -31,8 +36,15 @@ function Header({ isLoggedIn }) {
             >Регистрация</Link>
           </Route>
           <Route path="/">
-            <div>
-              <button className="header__link header__link_type_button button" type="button" onClick={() => { history.push("/sign-in")}}>
+            <div className="header__nav">
+              <p className="header__email">
+                { userEmail ? userEmail : "" }
+              </p>
+              <button
+                  className="header__link header__link_type_button button"
+                  type="button"
+                  onClick={ signOut }
+              >
                 Выйти
               </button>
             </div>

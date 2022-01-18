@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
-import { Redirect, Route, Switch } from "react-router-dom"
+import { useCallback, useEffect, useState } from "react"
+import { Route, Switch, useHistory } from "react-router-dom"
+import * as auth from "../auth"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 import "../index.css"
 import api from "../utils/api"
@@ -27,6 +28,7 @@ function App() {
     "_id": "",
     "cohort": ""
   })
+  const [ userEmail, setUserEmail ] = useState("")
   
   const [ cards, setCards ] = useState([])
   const [ selectedCard, setSelectedCard ] = useState({ name: "", link: "" })
@@ -37,8 +39,9 @@ function App() {
   const [ isConfirmationPopupOpen, setIsConfirmationPopupOpen ] = useState(
       false)
   const [ isImagePopupOpen, setIsImagePopupOpen ] = useState(false)
-  const [ isInfoTooltipOpen, setIsInfoTooltipOpen ] = useState(false)
+  const [ tooltip, setTooltip ] = useState({ isOpen: false, message: "" })
   const [ isLoading, setIsLoading ] = useState(false)
+  const history = useHistory()
   
   // Элементы UI блока карточек
   
@@ -108,7 +111,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsImagePopupOpen(false)
     setIsConfirmationPopupOpen(false)
-    setIsInfoTooltipOpen(false)
+    setTooltip(false)
     setSelectedCard({ name: "", link: "" })
   }
   
@@ -152,9 +155,26 @@ function App() {
     setIsLoggedIn(status)
   }
   
-  // Изначальный фетч с сервера
+  const tokenCheck = useCallback(() => {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt")
+      if (jwt) {
+        auth.getContent(jwt).then((response) => {
+          if (response) {
+            setIsLoggedIn(true)
+            setUserEmail(response.data.email)
+            history.push("/")
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    }
+  }, [history])
   
+  // Изначальный фетч с сервера
   useEffect(() => {
+    tokenCheck()
     Promise.all([ api.getPlaces(), api.getUserInfo() ])
         .then(([ places, userInfo ]) => {
           setCards(places)
@@ -163,13 +183,13 @@ function App() {
         .catch(error => {
           console.log(error)
         })
-  }, [])
+  }, [tokenCheck])
   
   return (
       <CurrentUserContext.Provider value={ currentUser }>
         <div className="page">
           <div className="page__container">
-            <Header/>
+            <Header userEmail={ userEmail }/>
             <Switch>
               <ProtectedRoute
                   exact
@@ -188,26 +208,29 @@ function App() {
                 <Register
                     signUpStatus={ handleSignUpSuccess }
                     isLoading={ isLoading }
+                    setIsLoading={ setIsLoading }
+                    handleInfoTooltip={ setTooltip }
                 />
               </Route>
               <Route path="/sign-in">
                 <Login
                     isLoggedIn={ handleLogin }
                     isLoading={ isLoading }
+                    setIsLoading={ setIsLoading }
                 />
               </Route>
-              <Route>
-                { isLoggedIn
-                  ? (
-                      <Redirect
-                          exact
-                          to="/"
-                      />
-                  )
-                  : (
-                      <Redirect to="/sign-in"/>
-                  ) }
-              </Route>
+              {/*<Route>*/ }
+              {/*  { isLoggedIn*/ }
+              {/*    ? (*/ }
+              {/*        <Redirect*/ }
+              {/*            exact*/ }
+              {/*            to="/"*/ }
+              {/*        />*/ }
+              {/*    )*/ }
+              {/*    : (*/ }
+              {/*        <Redirect to="/sign-in"/>*/ }
+              {/*    ) }*/ }
+              {/*</Route>*/ }
             </Switch>
             <EditAvatarPopup
                 isOpen={ isEditAvatarPopupOpen }
@@ -245,7 +268,7 @@ function App() {
             />
             
             <InfoTooltip
-                isOpen={ isInfoTooltipOpen }
+                isOpen={ tooltip.isOpen }
                 onClose={ closeAllPopups }
                 isSuccess={ isSignUpSuccessful }
             />
