@@ -1,9 +1,14 @@
 .header__nav {
-
+  animation: append-animate .2s ease-in-out;
 }
 
-@media screen and (max-width: 767px) {
-  .header__nav {
-  
+@keyframes append-animate {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
