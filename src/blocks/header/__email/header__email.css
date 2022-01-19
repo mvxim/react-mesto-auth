@@ -3,4 +3,14 @@
   line-height: 1.22;
   font-weight: 500;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 767px) {
+  .header__email {
+    font-size: 14px;
+
+  }
 }

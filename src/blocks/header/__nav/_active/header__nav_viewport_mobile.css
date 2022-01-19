@@ -1,0 +1,14 @@
+.header__nav_viewport_mobile {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .header__nav_viewport_mobile {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+  }
+}

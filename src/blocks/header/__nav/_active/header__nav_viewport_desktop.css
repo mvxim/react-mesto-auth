@@ -1,0 +1,11 @@
+.header__nav_viewport_desktop {
+  display: flex;
+  column-gap: 24px;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 767px) {
+ .header__nav_viewport_desktop {
+   display: none;
+ }
+}

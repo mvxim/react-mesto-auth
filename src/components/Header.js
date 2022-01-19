@@ -1,57 +1,103 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom"
 import headerLogo from "../images/logo/logo_color_white.svg"
+import Menu from "./Menu"
 
-function Header({ userEmail, isLoggedIn }) {
+function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
   
   const history = useHistory()
   
   const signOut = () => {
     localStorage.removeItem("jwt")
-    isLoggedIn(false)
+    onLogOut(false)
     history.push("/sign-in")
+  }
+  
+  const toggleMenu = () => {
+    showMenu(!isMenuActive)
   }
   
   return (
       <header className="header page__header">
-        <Link
-            className="button"
-            to="/"
-        >
-          <img
-              alt="Логотип сервиса «Место»."
-              className="header__logo"
-              src={ headerLogo }
-          />
-        </Link>
-        <Switch>
-          <Route path="/sign-up">
-            <Link
-                className="header__link button link"
-                to="/sign-in"
-            >Войти</Link>
-          </Route>
-          <Route path="/sign-in">
-            <Link
-                className="header__link button link"
-                to="/sign-up"
-            >Регистрация</Link>
-          </Route>
-          <Route exact path="/">
-            <div className="header__nav">
-              <p className="header__email">
-                { userEmail ? userEmail : "" }
-              </p>
-              <button
-                  className="header__link header__link_type_button button"
-                  type="button"
-                  onClick={ signOut }
+        { (isLoggedIn && isMenuActive) && <Menu
+            userEmail={ userEmail }
+            isMenuActive={ isMenuActive }
+            signOut={ signOut }
+            isMobile={ true }
+        /> }
+        <div className="header__wrapper">
+          <Switch>
+            <Route path="/sign-up">
+              <Link
+                  className="button"
+                  to="/"
               >
-                Выйти
-              </button>
-            </div>
+                <img
+                    alt="Логотип сервиса «Место»."
+                    className="header__logo"
+                    src={ headerLogo }
+                />
+              </Link>
+              <Link
+                  className="header__link button link"
+                  to="/sign-in"
+              >Войти</Link>
+            </Route>
+            
+            <Route path="/sign-in">
+              <Link
+                  className="button"
+                  to="/"
+              >
+                <img
+                    alt="Логотип сервиса «Место»."
+                    className="header__logo"
+                    src={ headerLogo }
+                />
+              </Link>
+              <Link
+                  className="header__link button link"
+                  to="/sign-up"
+              >Регистрация</Link>
+            </Route>
+            
+            <Route
+                exact
+                path="/"
+            >
+              <Link
+                  className="button"
+                  to="/"
+              >
+                <img
+                    alt="Логотип сервиса «Место»."
+                    className="header__logo"
+                    src={ headerLogo }
+                />
+              </Link>
+              <div className="header__menu-wrapper">
+                <Menu
+                    userEmail={ userEmail }
+                    isMenuActive={ isMenuActive }
+                    signOut={ signOut }
+                    isMobile={ false }
+                />
+                {
+                    isLoggedIn && (
+                        <button
+                        className={ `header__menu-button ${isMenuActive ? "header__menu-button_active" : ""}` }
+                        onClick={ toggleMenu }
+                        type="button"
+                    >
+                      <span/>
+                    </button>)
+                }
+              
+              </div>
+            </Route>
           
-          </Route>
-        </Switch>
+          </Switch>
+        </div>
+      
       
       </header>
   )

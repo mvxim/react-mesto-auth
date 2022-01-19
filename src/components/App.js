@@ -39,6 +39,7 @@ function App() {
       false)
   const [ isImagePopupOpen, setIsImagePopupOpen ] = useState(false)
   const [ tooltip, setTooltip ] = useState(false)
+  const [ isMenuActive, setIsMenuActive ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(false)
   const history = useHistory()
   
@@ -50,7 +51,6 @@ function App() {
       setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c))
     }).catch(err => console.log(err))
   }
-  
   
   const handleAddPlaceSubmit = (card) => {
     handlePopupLoader(true)
@@ -196,12 +196,13 @@ function App() {
       }
     } else {
       setIsLoggedIn(false)
+      setUserEmail("")
     }
   }, [ history ])
   
-  // Запрос
   useEffect(() => {
     tokenCheck()
+    setIsMenuActive(false)
   }, [ isLoggedIn, tokenCheck ])
   
   // Изначальный фетч с сервера
@@ -222,7 +223,10 @@ function App() {
           <div className="page__container">
             <Header
                 userEmail={ userEmail }
-                isLoggedIn={ handleLogin }
+                isLoggedIn={ isLoggedIn }
+                onLogOut={setIsLoggedIn}
+                isMenuActive={ isMenuActive }
+                showMenu={ setIsMenuActive }
             />
             <Switch>
               <ProtectedRoute

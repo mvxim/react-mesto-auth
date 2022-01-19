@@ -1,0 +1,17 @@
+.header__menu-button_active {
+
+}
+
+.header__menu-button_active:before {
+  transform: rotate(45deg) translateY(-50%);
+  top: 50%
+}
+
+.header__menu-button_active:after {
+  transform: rotate(-45deg) translateY(50%);
+  bottom: 50%
+}
+
+.header__menu-button_active span {
+  transform: scale(0);
+}
