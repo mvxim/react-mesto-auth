@@ -1,22 +1,16 @@
 import { useEffect } from "react"
+import usePageLock from "../hooks/usePageLock"
 
 const Popup = ({ isOpen, name, onClose, children }) => {
   
-
+  const { lockScroll, unlockScroll} = usePageLock()
   
   useEffect(() => {
     if (!isOpen) return
-  
-    const documentWidth = document.documentElement.clientWidth;
-    const windowWidth = window.innerWidth;
-    const scrollBarWidth = windowWidth - documentWidth;
-    
-    document.body.style.overflow = "hidden"
-    document.body.style.paddingRight = `${scrollBarWidth}px`;
+    lockScroll()
     
     return () => {
-      document.body.style.overflow = "auto"
-      document.body.style.paddingRight = null;
+      unlockScroll()
     }
   }, [isOpen])
   
