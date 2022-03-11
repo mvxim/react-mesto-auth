@@ -1,29 +1,32 @@
+import { BASE_URL } from './constants';
+
 class Api {
-  constructor( token ) {
-    this._url = "https://nomoreparties.co/v1/cohort-30/"
+  constructor(url) {
+    this._url = url;
     this._headers = {
-      authorization: token,
-      "Content-Type": "application/json"
-    }
+      'Content-Type': 'application/json',
+    };
   }
   
   _onResponse(res) {
     if (res.ok) {
-      return res.json()
+      return res.json();
     }
-    return Promise.reject(`>>> Ошибка: ${ res.status }`)
+    return Promise.reject(`>>> Ошибка: ${ res.status }`);
   }
   
   getUserInfo() {
-    return fetch(`${ this._url }users/me/`, {
-      method: "GET",
+    return fetch(`${ this._url }/users/me`, {
+      method: 'GET',
+      credentials: 'include',
       headers: this._headers
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
   
   setUserInfo(userInfo) {
-    return fetch(`${ this._url }users/me/`, {
-      method: "PATCH",
+    return fetch(`${ this._url }/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify(
           {
@@ -31,31 +34,34 @@ class Api {
             about: userInfo.about,
           }
       )
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
   
   setUserAvatar(avatarLink) {
-    return fetch(`${ this._url }users/me/avatar/`, {
-      method: "PATCH",
+    return fetch(`${ this._url }/users/me/avatar`, {
+      method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify(
           {
             avatar: avatarLink
           }
       )
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
   
   getPlaces() {
-    return fetch(`${ this._url }cards`, {
-      method: "GET",
+    return fetch(`${ this._url }/cards`, {
+      method: 'GET',
+      credentials: 'include',
       headers: this._headers
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
   
   createNewPlace({ name, link }) {
-    return fetch(`${ this._url }cards`, {
-      method: "POST",
+    return fetch(`${ this._url }/cards`, {
+      method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify(
           {
@@ -63,24 +69,26 @@ class Api {
             link: link
           }
       )
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
   
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${ this._url }cards/likes/${ cardId }`, {
-      method: `${ isLiked ? "DELETE" : "PUT" }`,
+    return fetch(`${ this._url }/cards/${ cardId }/likes`, {
+      method: `${ isLiked ? 'DELETE' : 'PUT' }`,
+      credentials: 'include',
       headers: this._headers,
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
   
   removePlace(cardId) {
-    return fetch(`${ this._url }cards/${ cardId }`, {
-      method: "DELETE",
+    return fetch(`${ this._url }/cards/${ cardId }`, {
+      method: 'DELETE',
+      credentials: 'include',
       headers: this._headers,
-    }).then(this._onResponse)
+    }).then(this._onResponse);
   }
 }
 
- const api = new Api("a2e8d35a-8087-4045-b36f-fee28ac34f65")
+const api = new Api(BASE_URL);
 
-export default api
+export default api;

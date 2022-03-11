@@ -1,31 +1,33 @@
-import React, { useContext } from "react"
-import { CurrentUserContext } from "../contexts/CurrentUserContext"
+import React, { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card({ cardData, onCardClick, onCardLike, onCardDeleteClick }) {
   
-  const currentUser = useContext(CurrentUserContext)
-  const { name, link, likes, owner, _id: cardId } = cardData
+  const currentUser = useContext(CurrentUserContext);
   
-  const isOwn = owner._id === currentUser._id
+  const { name, link, likes, owner, _id: cardId } = cardData;
+  
+  const isOwn = owner._id === currentUser._id;
   const galleryDeleteButtonClassName = (
-      `delete gallery__delete-btn ${ isOwn ? "" : "delete_hidden" }`
-  )
+      `delete gallery__delete-btn ${ isOwn ? '' : 'delete_hidden' }`
+  );
   
-  const isLiked = likes.some(like => like._id === currentUser._id)
+  const isLiked = likes.some(like => like._id === currentUser._id);
+  
   const galleryLikeButtonClassName = (
-      `like gallery__like-btn ${ isLiked ? "like_active" : "" }`)
+      `like gallery__like-btn ${ isLiked ? 'like_active' : '' }`);
   
   const handleCardClick = () => {
-    onCardClick(cardData)
-  }
+    onCardClick(cardData);
+  };
   
   const handleLikeClick = () => {
-    onCardLike(cardData)
-  }
+    onCardLike(cardData);
+  };
   
   const handleCardDeleteClick = () => {
-    onCardDeleteClick(cardId)
-  }
+    onCardDeleteClick(cardId);
+  };
   
   return (
       <li className="gallery__item">
@@ -56,7 +58,7 @@ function Card({ cardData, onCardClick, onCardLike, onCardDeleteClick }) {
           </div>
         </div>
       </li>
-  )
+  );
 }
 
-export default Card
+export default Card;

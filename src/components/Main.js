@@ -1,6 +1,6 @@
-import { useContext } from "react"
-import { CurrentUserContext } from "../contexts/CurrentUserContext"
-import Card from "./Card"
+import { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Card from './Card';
 
 function Main({
   cards,
@@ -12,7 +12,7 @@ function Main({
   onCardDeleteClick
 }) {
   
-  const currentUser = useContext(CurrentUserContext)
+  const currentUser = useContext(CurrentUserContext);
   
   return (
       <main className="main page__main">
@@ -55,22 +55,24 @@ function Main({
             className="gallery"
         >
           <ul className="gallery__grid">
-            { cards.map((card) =>
-                (<Card
-                    cardData={ card }
-                    key={ card._id }
-                    onCardClick={ onCardClick }
-                    onCardLike={ onCardLike }
-                    onCardDeleteClick={ onCardDeleteClick }
-                />)
-            )
+            {
+              cards.length
+                  ? (
+                      cards.map((card) =>
+                          (<Card
+                              cardData={ card }
+                              key={ card._id }
+                              onCardClick={ onCardClick }
+                              onCardLike={ onCardLike }
+                              onCardDeleteClick={ onCardDeleteClick }
+                          />)))
+                  : (<li>Карточек нет</li>)
             }
           </ul>
         </section>
-      
       </main>
   
-  )
+  );
 }
 
-export default Main
+export default Main;

@@ -1,41 +1,54 @@
-export const BASE_URL = "https://auth.nomoreparties.co"
+import { BASE_URL } from './constants';
 
 const checkResponse = (res) => {
   if (res.ok) {
-    return res.json()
+    return res.json();
   }
-  return Promise.reject(`>>> Ошибка: ${ res.status }`)
-}
+  return Promise.reject(res.status);
+};
 
 export const register = (userData) => {
   return fetch(`${ BASE_URL }/signup`, {
-    method: "POST",
+    method: 'POST',
+    credentials: 'include',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(userData)
-  }).then(checkResponse)
-}
+  }).then(checkResponse);
+};
 
 export const login = (userData) => {
   return fetch(`${ BASE_URL }/signin`, {
-    method: "POST",
+    //const BASE_URL = 'http://api.mvxim.nomoredomains.work'
+    method: 'POST',
+    credentials: 'include',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(userData)
-  }).then(checkResponse)
-}
+  }).then(checkResponse);
+};
 
-export const getContent = (token) => {
+export const getContent = () => {
   return fetch(`${ BASE_URL }/users/me`, {
-    method: "GET",
+    method: 'GET',
+    credentials: 'include',
     headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${ token }`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     }
   })
-      .then(checkResponse)
-      .then(data => data)
-}
+      .then(checkResponse);
+  // .then(data => data);
+};
+
+export const logout = () => {
+  return fetch(`${ BASE_URL }/logout`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  }).then(checkResponse);
+};

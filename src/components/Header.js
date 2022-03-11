@@ -1,20 +1,21 @@
-import { Link, Route, Switch, useHistory } from "react-router-dom"
-import headerLogo from "../images/logo/logo_color_white.svg"
-import Menu from "./Menu"
+import { Link, Route, Switch, useHistory } from 'react-router-dom';
+import headerLogo from '../images/logo/logo_color_white.svg';
+import { logout } from '../utils/auth';
+import Menu from './Menu';
 
 function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
   
-  const history = useHistory()
+  const history = useHistory();
   
-  const signOut = () => {
-    localStorage.removeItem("jwt")
-    onLogOut(false)
-    history.push("/sign-in")
-  }
+  const signOut = async () => {
+    await logout();
+    onLogOut(false);
+    history.push('/signin');
+  };
   
   const toggleMenu = () => {
-    showMenu(!isMenuActive)
-  }
+    showMenu(!isMenuActive);
+  };
   
   return (
       <header className="header page__header">
@@ -26,7 +27,7 @@ function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
         /> }
         <div className="header__wrapper">
           <Switch>
-            <Route path="/sign-up">
+            <Route path="/signup">
               <Link
                   className="button"
                   to="/"
@@ -39,11 +40,11 @@ function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
               </Link>
               <Link
                   className="header__link button link"
-                  to="/sign-in"
+                  to="/signin"
               >Войти</Link>
             </Route>
             
-            <Route path="/sign-in">
+            <Route path="/signin">
               <Link
                   className="button"
                   to="/"
@@ -56,7 +57,7 @@ function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
               </Link>
               <Link
                   className="header__link button link"
-                  to="/sign-up"
+                  to="/signup"
               >Регистрация</Link>
             </Route>
             
@@ -84,12 +85,12 @@ function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
                 {
                     isLoggedIn && (
                         <button
-                        className={ `header__menu-button ${isMenuActive ? "header__menu-button_active" : ""}` }
-                        onClick={ toggleMenu }
-                        type="button"
-                    >
-                      <span/>
-                    </button>)
+                            className={ `header__menu-button ${ isMenuActive ? 'header__menu-button_active' : '' }` }
+                            onClick={ toggleMenu }
+                            type="button"
+                        >
+                          <span/>
+                        </button>)
                 }
               
               </div>
@@ -100,7 +101,7 @@ function Header({ userEmail, isLoggedIn, onLogOut, isMenuActive, showMenu }) {
       
       
       </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

@@ -7,7 +7,7 @@
   "name": "mesto-react",
   "description": "Учебный проект «Место»: адаптивная и интерактивная страница с галереей фотографий. Портирован на React с сохранением функциональности.",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -25,7 +25,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy prod": "npm run build && scp -r ./build/* mvxim@51.250.16.170:/home/mvxim/frontend"
   },
   "eslintConfig": {
     "extends": [
